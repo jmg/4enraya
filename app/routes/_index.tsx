@@ -1,33 +1,37 @@
 import type { MetaFunction } from "@remix-run/node"
 import { useState } from "react"
+import { motion } from "framer-motion"
 
 export const meta: MetaFunction = () => {
     return [
-        { title: "4 en raya" },
-        { name: "description", content: "4 en raya" },
+        { title: "Four in Line" },
+        { name: "description", content: "Four in Line" },
     ]
 }
 
 const WIDTH = 7
 const HEIGHT = 6
+const PIECE_SIZE = 100
 
-const RoundedPiece = ({ color }) => {
+const RoundedPiece = ({ color, row }) => {
 
     return (
+        <motion.div initial={{ y: - (row + 1) * PIECE_SIZE }} animate={{ y: 0 }} transition={{ ease: "easeOut", duration: 0.5 }}>
         <div style={{
             width: "80px",
             height: "80px",
             borderRadius: "50%",
             backgroundColor: color,
         }}/>
+        </motion.div>
     )
 }
 
 const Tile = ({children}) => {
 
     return <div style={{
-        width: "100px",
-        height: "100px",
+        width: PIECE_SIZE,
+        height: PIECE_SIZE,
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -111,7 +115,9 @@ export default function Index() {
     }
 
     return (
-        <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8", display: "flex", alignItems: "center", justifyContent: "center", height: "95vh"  }}>
+        <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "95vh"  }}>
+
+            <h1>Four in Line</h1>
 
             <div style={{display: "flex", flexDirection: "column", gap: "10px", textAlign: "center"}}>
                 <div>
@@ -120,8 +126,8 @@ export default function Index() {
                             {row.map((cell, j) => (
                                 <div key={(i+1)*j} onClick={() => putPiece(j)}>
                                 <Tile>
-                                    {cell === 1 && <RoundedPiece color="red" />}
-                                    {cell === 2 && <RoundedPiece color="green" />}
+                                    {cell === 1 && <RoundedPiece color="red" row={i} />}
+                                    {cell === 2 && <RoundedPiece color="green" row={i} />}
                                 </Tile>
                                 </div>
                             ))}
@@ -131,10 +137,11 @@ export default function Index() {
 
                 {winner && <div style={{display: "flex", flexDirection: "row", gap: "10px", alignItems: "center", justifyContent: "center"}}>
                     <h1 style={{"color": player === 1 ? "green": "red"}}>Player {player === 1 ? "green" : "red"} wins!</h1>
-                    <button style={{height: 50}} onClick={resetBoard}>Play again</button>
+                    <button style={{height: 50, cursor: "pointer"}} onClick={resetBoard}>Play again</button>
                 </div>}
                 {!winner && <h1>Player {player === 1 ? "red" : "green"} turn</h1>}
             </div>
+
         </div>
     )
 }
