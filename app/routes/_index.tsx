@@ -1,6 +1,8 @@
 import type { MetaFunction } from "@remix-run/node"
 import { useState } from "react"
 import { motion } from "framer-motion"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faRedoAlt } from "@fortawesome/free-solid-svg-icons";
 
 export const meta: MetaFunction = () => {
     return [
@@ -32,12 +34,7 @@ const Tile = ({children}) => {
     return <div style={{
         width: PIECE_SIZE,
         height: PIECE_SIZE,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        border: "1px solid #000",
-        fontSize: "2em",
-    }}>
+    }} className="flex flex-col items-center justify-center border-2">
         {children}
     </div>
 }
@@ -80,7 +77,6 @@ export default function Index() {
 
     const checkWinner = (board: number[][]) => {
 
-        //check 4 in line horizontally, vertically and diagonally
         for (let i = 0; i < HEIGHT; i++) {
             for (let j = 0; j < WIDTH; j++) {
                 if (board[i][j] !== null) {
@@ -115,11 +111,11 @@ export default function Index() {
     }
 
     return (
-        <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "95vh"  }}>
+        <div className="flex flex-col items-center justify-center gap-10 h-screen">
 
-            <h1>Four in Line</h1>
+            <h1 className="text-3xl font-bold text-blue-500 underline">Four in Line</h1>
 
-            <div style={{display: "flex", flexDirection: "column", gap: "10px", textAlign: "center"}}>
+            <div className="flex flex-col items-center justify-center gap-10">
                 <div>
                     {board.map((row, i) => (
                         <div key={i} style={{ display: "flex" }}>
@@ -135,11 +131,14 @@ export default function Index() {
                     ))}
                 </div>
 
-                {winner && <div style={{display: "flex", flexDirection: "row", gap: "10px", alignItems: "center", justifyContent: "center"}}>
-                    <h1 style={{"color": player === 1 ? "green": "red"}}>Player {player === 1 ? "green" : "red"} wins!</h1>
-                    <button style={{height: 50, cursor: "pointer"}} onClick={resetBoard}>Play again</button>
+                {winner && <div className="flex flex-row items-center justify-center gap-10">
+                    <h1 className="text-3xl font-bold" style={{"color": player === 1 ? "green": "red"}}>Player {player === 1 ? "green" : "red"} wins!</h1>
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={resetBoard}>
+                        Play again
+                        <FontAwesomeIcon icon={faRedoAlt} className="ml-2" />
+                    </button>
                 </div>}
-                {!winner && <h1>Player {player === 1 ? "red" : "green"} turn</h1>}
+                {!winner && <h1 className={`text-3xl font-bold " + ${player === 1 ? "text-red-500": "text-green-500"}`}>Player {player === 1 ? "red" : "green"} turn</h1>}
             </div>
 
         </div>

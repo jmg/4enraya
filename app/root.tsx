@@ -8,14 +8,20 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
+import { ThemeProvider, useTheme } from "./providers/theme";
+import clsx from 'clsx';
+import styles from "./tailwind.css";
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
+  { rel: "stylesheet", href: styles },
 ];
 
-export default function App() {
-  return (
-    <html lang="en">
+function App() {
+
+  const [theme] = useTheme();
+
+  return (<html lang="en" className={clsx(theme)}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -29,5 +35,14 @@ export default function App() {
         <LiveReload />
       </body>
     </html>
+  );
+}
+
+export default function AppWithProviders() {
+
+  return (
+    <ThemeProvider>
+      <App />
+    </ThemeProvider>
   );
 }
