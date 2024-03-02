@@ -5,7 +5,7 @@ import { faRedoAlt } from "@fortawesome/free-solid-svg-icons";
 import { RoundedPiece, Tile } from "./Piece"
 import { HEIGHT, WIDTH } from "../config"
 
-interface IBoard {
+interface IBoard extends Array<(number|null)[]> {
     [key: number]: (number|null)[]
 }
 
@@ -26,22 +26,12 @@ export default function Board() {
             return
         }
 
-        const findFreeSpace = (col: number) => {
-
-            for (let i = HEIGHT - 1; i >= 0; i--) {
-                if (board[i][col] === null) {
-                    return i
-                }
-            }
-            return -1
-        }
-
         const row = findFreeSpace(col)
         if (row === -1) {
             return
         }
 
-        const newBoard = structuredClone(board)
+        const newBoard = structuredClone<IBoard>(board)
         newBoard[row][col] = player
 
         setBoard(newBoard)
@@ -50,7 +40,17 @@ export default function Board() {
         checkWinner(newBoard)
     }
 
-    const checkWinner = (board: number[][]) => {
+    const findFreeSpace = (col: number) => {
+
+        for (let i = HEIGHT - 1; i >= 0; i--) {
+            if (board[i][col] === null) {
+                return i
+            }
+        }
+        return -1
+    }
+
+    const checkWinner = (board: IBoard) => {
 
         for (let i = 0; i < HEIGHT; i++) {
             for (let j = 0; j < WIDTH; j++) {
