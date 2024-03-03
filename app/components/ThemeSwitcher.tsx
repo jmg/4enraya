@@ -3,17 +3,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Switch } from "@/components/ui/switch"
 import { Theme, useTheme } from "remix-themes"
 import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button"
 
 
 export default function ThemeSwitcher() {
-  const [, setTheme] = useTheme()
+  const [theme, setTheme] = useTheme()
+
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === Theme.LIGHT ? Theme.DARK : Theme.LIGHT));
+  }
 
   return (
     <div className="flex items-center space-x-2">
-        <Switch style={{width: 100}} onClick={() => setTheme(Theme === "dark" ? "light" : "dark")} checked={Theme === "dark"}></Switch>
-        <Label>
-            <FontAwesomeIcon style={{color: "#006FEE", width: 16}} icon={Theme == "dark" ? faMoon : faSun} ></FontAwesomeIcon>
-        </Label>
+        <Button onClick={toggleTheme} variant="ghost"><FontAwesomeIcon style={{color: "#006FEE", width: 16}} icon={theme == "light" ? faMoon : faSun} /></Button>
     </div>
   )
 }

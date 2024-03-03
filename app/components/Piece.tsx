@@ -11,8 +11,8 @@ const RoundedPiece = ({ color, row }: { color: string, row: number }) => {
             height: "80px",
             borderRadius: "50%",
             backgroundColor: color,
-            border: "2px solid white",
-        }}/>
+        }} className="border-2 dark:border-white border-gray-300">
+        </div>
         </motion.div>
     )
 }
