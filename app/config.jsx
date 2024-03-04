@@ -1,5 +1,6 @@
 const WIDTH = 7
 const HEIGHT = 6
-const PIECE_SIZE = 100
+const TILE_SIZE = 100
+const PIECE_SIZE = TILE_SIZE - TILE_SIZE * 20 / 100
 
-export { WIDTH, HEIGHT, PIECE_SIZE }
+export { WIDTH, HEIGHT, TILE_SIZE, PIECE_SIZE }

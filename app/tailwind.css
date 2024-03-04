@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.tile {
+    width: 100px;
+    height: 100px;
+}
+
+.piece {
+    width: 80px;
+    height: 80px;
+}
+
+@media (max-width: 720px) {
+    .tile {
+        width: 50px;
+        height: 50px;
+    }
+    .piece {
+        width: 40px;
+        height: 40px;
+    }
+}

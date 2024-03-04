@@ -86,15 +86,17 @@ export default function Board() {
     }
 
     return <>
-        <div className="mb-12">
-        {winner && <div className="flex flex-row items-center justify-center gap-10">
-            <h1 className="text-3xl font-bold" style={{"color": player === 1 ? "green": "red"}}>Player {player === 1 ? "green" : "red"} wins!</h1>
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={resetBoard}>
-                Play again
-                <FontAwesomeIcon icon={faRedoAlt} className="ml-2" />
-            </button>
-        </div>}
-        {!winner && <h1 className={`text-3xl font-bold " + ${player === 1 ? "text-red-500": "text-green-500"}`}>Player {player === 1 ? "red" : "green"} turn</h1>}
+        <div className="mb-4">
+        {winner ?
+            <div className="flex flex-row items-center justify-center gap-10">
+                <h1 className="sm:text-2xl text-lg font-bold" style={{"color": player === 1 ? "green": "red"}}>Player {player === 1 ? "green" : "red"} wins!</h1>
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={resetBoard}>
+                    Play again
+                    <FontAwesomeIcon icon={faRedoAlt} className="ml-2" />
+                </button>
+            </div>
+        :
+            <h1 className={`sm:text-2xl text-lg font-bold " + ${player === 1 ? "text-red-500": "text-green-500"}`}>Player {player === 1 ? "red" : "green"} turn</h1>}
         </div>
 
         <div className="flex flex-col items-center justify-center gap-10">
